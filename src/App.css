@@ -1,3 +1,13 @@
+.main-bg {
+  height: 300px;
+  background-image: url("./assets/GenG_BG.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.player-bg {
+  width: 100%;
+}
 .App {
   text-align: center;
 }
@@ -36,3 +46,4 @@
     transform: rotate(360deg);
   }
 }
+
