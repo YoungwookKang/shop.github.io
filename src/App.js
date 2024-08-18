@@ -1,97 +1,49 @@
-
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container, Nav, Navbar} from 'react-bootstrap';
-import {Row, Col} from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import {useNavigate, Outlet, Link, Route, Routes} from 'react-router-dom';
+import HomeComponent from './HomeComponent';
+import Player from './Player';
+import Detail from "./Detail";
 import bg from './assets/GenG_BG.jpg';
-import {useState} from "react";
-import data from './data.js';
 
 function App() {
-  const players = ['Kiin', 'Canyon', 'Chovy', 'Peyz', 'Lehends'];
+  let navigate = useNavigate();
 
-  let [shoes] = useState(data);
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="#home">Gen.G</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#player">Player</Nav.Link>
-            <Nav.Link href="#record">Record</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/')}}>Home</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/player')}}>Player</Nav.Link>
+            <Nav.Link href="detail">Detail</Nav.Link>
+            <Nav.Link href="record">Record</Nav.Link>
+
           </Nav>
         </Container>
       </Navbar>
 
-      <div className="main-bg" style={{backgroundImage: 'url(' + bg + ')'}}></div>
-      <div className="container">
-        <div className="row">
-          {shoes.map((shoe, index) => (
-            <Shoes shoes= {shoe} index= {index} key={index}/>
-          ))}
-          {/*{shoes.map((shoe, index) => (*/}
-          {/*  <div className="col-md-4" key={index}>*/}
-          {/*    <img src={`https://codingapple1.github.io/shop/shoes${index + 1}.jpg`} width="80%" alt={shoe.title}/>*/}
-          {/*    <h4>{shoe.title}</h4>*/}
-          {/*    <p>{shoe.price}</p>*/}
-          {/*  </div>*/}
-          {/*))}*/}
-        </div>
-      </div>
-      {/*나중에 player에 들어갈 애들*/}
-      {/*<Container fluid="md">*/}
-      {/*  <Row>*/}
-      {/*    <Col>*/}
-      {/*      <img className="player-bg" src={process.env.PUBLIC_URL + '/Kiin_GenG_LCK.png'} alt="Kiin"/>*/}
-      {/*      <h6>Kiin | Gi In Kim</h6>*/}
-      {/*      <h6>TOP</h6>*/}
-      {/*      <p>X | Instagram | AfreecaTv</p>*/}
-      {/*    </Col>*/}
-      {/*    <Col>*/}
-      {/*      <img className="player-bg" src={process.env.PUBLIC_URL + '/Canyon_GenG_LCK.png'} alt="Canyon"/>*/}
-      {/*      <h6>Canyon | Geon Bu Kim</h6>*/}
-      {/*      <h6>JUNCLE</h6>*/}
-      {/*      <p>Instagram | AfreecaTv</p>*/}
-      {/*    </Col>*/}
-      {/*    <Col>*/}
-      {/*      <img className="player-bg" src={process.env.PUBLIC_URL + '/Chovy_GenG_LCK.png'} alt="Chovy"/>*/}
-      {/*      <h6>Chovy | Ji Hun Jung</h6>*/}
-      {/*      <h6>MID</h6>*/}
-      {/*      <p>X | Instagram | Weibo | AfreecaTV</p>*/}
-      {/*    </Col>*/}
-      {/*  </Row>*/}
-      {/*  <Row>*/}
-      {/*    <Col>*/}
-      {/*      <img className="player-bg" src={process.env.PUBLIC_URL + '/Peyz_GenG_LCK.png'} alt="Peyz"/>*/}
-      {/*      <h6>Peyz | Soo Hwan Kim</h6>*/}
-      {/*      <h6>ADC</h6>*/}
-      {/*      <p>X | Instagram | Weibo | AfreecaTV</p>*/}
-      {/*    </Col>*/}
-      {/*    <Col>*/}
-      {/*      <img className="player-bg" src={process.env.PUBLIC_URL + '/Lehends_GenG_LCK.png'} alt="Lehends"/>*/}
-      {/*      <h6>Lehends | Si Woo Son</h6>*/}
-      {/*      <h6>SUP</h6>*/}
-      {/*      <p>X | Instagram | AfreecaTv</p>*/}
-      {/*    </Col>*/}
-      {/*    <Col></Col>*/}
-      {/*  </Row>*/}
-      {/*</Container>*/}
+
+      <div className="main-bg" style={{ backgroundImage: 'url(' + bg + ')' }}></div>
+
+      <Routes>
+        <Route path="/" element={<HomeComponent />} />
+        <Route path="/player" element={<Player />}>
+          <Route path="player_state"></Route>
+        </Route>
+        <Route path="/detail" element={<Detail />}/>
+        {/*<Route path="/record" element={<Record />}>*/}
+        {/* 여기에 이제 경기 기록 테이블 만들고 각 경기 누르면 <Outlet></OutLet> 사용해서 보여줄 곳 찾기*/}
+        {/*  <Route path="detail" element={<Detail/>}></Route>*/}
+        {/*</Route>*/}
+        <Route path="*" element={<div>없는 페이지에요</div>}/>
+      </Routes>
+      <Link to={'/'}> 홈으로</Link>
+      <Link to={'/player'}> 선수 소개</Link>
     </div>
   );
 }
 
-function Shoes({shoes, index}) {
-  console.log(shoes);
-  return (
-    <div className="col-md-4">
-      <img src={`https://codingapple1.github.io/shop/shoes${index + 1}.jpg`} width="80%" alt={shoes.title}/>
-      <h4>{shoes.title}</h4>
-      <p>{shoes.price}</p>
-    </div>
-  )
-}
-
 export default App;
-
-
