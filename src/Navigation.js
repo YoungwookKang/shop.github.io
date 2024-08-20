@@ -2,7 +2,7 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 
-export const Navigation = () => {
+function Navigation() {
   let navigate = useNavigate();
   return (
     <Navbar bg="dark" data-bs-theme="dark">
@@ -16,6 +16,7 @@ export const Navigation = () => {
             navigate('/player')
           }}>Player</Nav.Link>
           <Nav.Link onClick={()=>navigate('/detail')}>Detail</Nav.Link>
+          <Nav.Link onClick={()=>navigate('/cart')}>Cart</Nav.Link>
           <Nav.Link href="record">Record</Nav.Link>
 
         </Nav>

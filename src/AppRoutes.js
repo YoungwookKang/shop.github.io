@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Link, Route, Routes} from "react-router-dom";
 import {HomeComponent} from "./HomeComponent.js";
 import {Player} from "./Player.js";
+import {Cart} from "./Cart.js"
 import Navigation from "./Navigation";
 import Detail from "./Detail";
 import data from "./data";
@@ -9,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const AppRoutesComponent = () => {
   let [shoes, setShoes] = useState(data);
+
   return (
     <div>
       <Navigation></Navigation>
@@ -22,6 +24,7 @@ export const AppRoutesComponent = () => {
         <Route path="detail" element={<Detail shoes={shoes}/>}></Route>
         {/*</Route>*/}
         <Route path="/detail/:index" element={<Detail shoes={shoes}/>}/>
+        <Route path="/cart" element={<Cart/>}/>
         <Route path="*" element={<div>없는 페이지에요</div>}/>
 
 

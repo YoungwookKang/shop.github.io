@@ -1,16 +1,18 @@
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
+
+import styles from "./Detail.module.css";
 
 let YellowBtn = styled.button`
     background : ${ props => props.bg};
-    color : ${ props => props.bg === 'blue' ? 'white' : 'black'};
+    color : ${ props => props.color};
     padding : 10px;
 `
 
 let NewButton = styled(YellowBtn)`
-    height : 50px;
-    color: #61dafb;
+    color: 'white';
 `
 
 
@@ -24,6 +26,8 @@ function Detail({ shoes }) {
   const product = shoes.find((item) => item.id === index);
   let navigate = useNavigate();
   let [inputValue, setInputValue] = useState("");
+  let buttonColor = ["#ff994b", "#1f88ff", "#30a839"]
+  let [buttonValue, setButtonValue] = useState(0);
 
   // mount, update 될 때, 나머지 다 하고 마지막에 함
   // useEffect 안쓰면 자바스크립트는 위에서부터 아래로 코드를 실행시켜서
@@ -78,9 +82,24 @@ function Detail({ shoes }) {
             <button className="btn btn-danger">주문하기</button>
           </div>
         </div>
-        <YellowBtn onClick={()=>{
-          setCnt(cnt + 1);
-        }}>{`버튼${cnt}`}</YellowBtn>
+        <Nav variant="tabs"  defaultActiveKey="link0">
+          <Nav.Item>
+            <Nav.Link eventKey="link0" onClick={()=> {setButtonValue(0)}}>버튼0</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link1" onClick={()=> {setButtonValue(1)}}>버튼1</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link2" onClick={()=> {setButtonValue(2)}}>버튼2</Nav.Link>
+          </Nav.Item>
+        </Nav>
+        <TabContent buttonValue={buttonValue}></TabContent>
+
+
+        {/*<YellowBtn onClick={()=>{*/}
+        {/*  setCnt(cnt + 1);*/}
+        {/*}}>{`버튼${cnt}`}</YellowBtn>*/}
+
       </div>
     );
   }
@@ -109,5 +128,24 @@ function Detail({ shoes }) {
     </div>
   );
 }
+
+function TabContent({buttonValue}) {
+  let [fade, setFade] = useState('');
+  useEffect(()=> {
+    let a = setTimeout(()=> {setFade('end');}, 100)
+
+    return () => {
+      clearTimeout(a);
+      setFade('')
+    }
+  },[buttonValue]);
+  let content = [<div>0</div>, <div>1</div>, <div>2</div>];
+  return (
+    <div className={`${styles.start} ${styles[fade]}`}>
+      {content[buttonValue]}
+    </div>
+  );
+}
+
 
 export default Detail;
