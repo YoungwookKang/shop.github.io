@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-const Player = () => {
+export const Player = () => {
   return (
     <div className="player">
       <Container fluid="md">
@@ -45,4 +45,3 @@ const Player = () => {
   );
 };
 
-export default Player;
