@@ -10,6 +10,7 @@ import store from "./Store.js";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    {/*redux 사용하려면 앱을 Provider로 가둬야함*/}
     <Provider store={store}>
       <BrowserRouter>
         <App />
