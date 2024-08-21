@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addStock } from './Store'
 import { Nav } from "react-bootstrap";
 
 import styles from "./Detail.module.css";
@@ -26,8 +28,9 @@ function Detail({ shoes }) {
   const product = shoes.find((item) => item.id === index);
   let navigate = useNavigate();
   let [inputValue, setInputValue] = useState("");
-  let buttonColor = ["#ff994b", "#1f88ff", "#30a839"]
   let [buttonValue, setButtonValue] = useState(0);
+  let userSelect = useSelector((state) => { return state })
+  let dispatch = useDispatch(); // useDispatch 훅 사용해야 reducers에 있는 변경함수 사용가능
 
   // mount, update 될 때, 나머지 다 하고 마지막에 함
   // useEffect 안쓰면 자바스크립트는 위에서부터 아래로 코드를 실행시켜서
@@ -73,18 +76,26 @@ function Detail({ shoes }) {
           </div>
           <div className="col-md-6">
             {isNaN(inputValue) ? (<div className="alert alert-warning">경고: 숫자만 입력하세요</div>) : null}
-            <input onChange={(e)=> {
+            <input onChange={(e) => {
               setInputValue(e.target.value);
             }}/>
             <h4 className="pt-5">{shoes[index].title}</h4>
             <p>{shoes[index].content}</p>
             <p>{shoes[index].price}</p>
-            <button className="btn btn-danger">주문하기</button>
+            <button className="btn btn-danger" onClick={() => {
+              // item 오브젝트의 구성이 stock 오브젝트와 달라서 제대로 들어가지 않음
+              // 그래서 item 오브젝트의 구성요소를 빼서 stock에 알맞은 형식으로 바꿔서 넣음
+              dispatch(addStock({id: shoes[index].id, name: shoes[index].title, count: 1}));
+              console.log(userSelect.stock);
+            }}>주문하기
+            </button>
           </div>
         </div>
-        <Nav variant="tabs"  defaultActiveKey="link0">
+        <Nav variant="tabs" defaultActiveKey="link0">
           <Nav.Item>
-            <Nav.Link eventKey="link0" onClick={()=> {setButtonValue(0)}}>버튼0</Nav.Link>
+            <Nav.Link eventKey="link0" onClick={() => {
+              setButtonValue(0)
+            }}>버튼0</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link1" onClick={()=> {setButtonValue(1)}}>버튼1</Nav.Link>
@@ -115,7 +126,10 @@ function Detail({ shoes }) {
             <h4 className="pt-5">{item.title}</h4>
             <p>{item.content}</p>
             <p>{item.price}</p>
-            <button className="btn btn-danger">주문하기</button>
+            <button className="btn btn-danger" onClick={()=> {
+              dispatch(addStock({id : item.id, name : item.title, count : 1}));
+              console.log(userSelect.stock);
+            }}>주문하기</button>
           </div>
         </div>
       ))}
