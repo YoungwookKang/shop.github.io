@@ -7,10 +7,10 @@ import Navigation from "./Navigation";
 import Detail from "./Detail";
 import data from "./data";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Record from "./Record";
 
 export const AppRoutesComponent = () => {
   let [shoes, setShoes] = useState(data);
-
   return (
     <div>
       <Navigation></Navigation>
@@ -25,6 +25,7 @@ export const AppRoutesComponent = () => {
         {/*</Route>*/}
         <Route path="/detail/:index" element={<Detail shoes={shoes}/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/record" element={<Record/>}/>
         <Route path="*" element={<div>없는 페이지에요</div>}/>
 
 
